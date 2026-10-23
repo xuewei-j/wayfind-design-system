@@ -56,8 +56,8 @@ describe('MCP server (in-memory)', () => {
     const byWords = JSON.parse(textOf(await client.callTool({ name: 'search_tokens', arguments: { query: 'muted text' } })));
     expect(byWords[0]).toMatchObject({ name: 'color.text.muted', usage: 'var(--wf-color-text-muted)' });
 
-    const byColor = JSON.parse(textOf(await client.callTool({ name: 'search_tokens', arguments: { query: '#31a3b4', limit: 3 } })));
-    expect(byColor[0].value).toBe('#31a3b4');
+    const byColor = JSON.parse(textOf(await client.callTool({ name: 'search_tokens', arguments: { query: '#ba4300', limit: 3 } })));
+    expect(byColor[0].value).toBe('#ba4300');
 
     const toc = JSON.parse(textOf(await client.callTool({ name: 'search_tokens', arguments: {} })));
     expect(toc.total).toBeGreaterThan(100);
@@ -74,22 +74,22 @@ describe('MCP server (in-memory)', () => {
   it('check_styles with fix: true returns fixed code', async () => {
     const result = (await client.callTool({
       name: 'check_styles',
-      arguments: { code: '.a { padding: 15px; color: #333; }', fix: true },
+      arguments: { code: '.a { padding: 15px; color: #111; }', fix: true },
     })) as { content: TextContent[] };
     expect(JSON.parse(result.content[0]!.text)).toMatchObject({ applied: 2, remaining: { passed: true } });
     expect(result.content[1]!.text).toBe('.a { padding: var(--wf-space-4); color: var(--wf-color-text-default); }');
   });
 
-  it('check_contrast explains the brand teal and offers passing tokens', async () => {
+  it('check_contrast explains the light brand orange and offers passing tokens', async () => {
     const result = JSON.parse(
       textOf(
         await client.callTool({
           name: 'check_contrast',
-          arguments: { foreground: 'palette.teal.500', background: 'color.bg.canvas' },
+          arguments: { foreground: 'palette.orange.400', background: 'color.bg.canvas' },
         }),
       ),
     );
-    expect(result).toMatchObject({ ratio: 2.99, aaText: false, aaLarge: false });
+    expect(result).toMatchObject({ ratio: 2.97, aaText: false, aaLarge: false });
     expect(result.alternatives).toContain('color.text.brand');
 
     const bad = await client.callTool({ name: 'check_contrast', arguments: { foreground: 'teal', background: '#fff' } });

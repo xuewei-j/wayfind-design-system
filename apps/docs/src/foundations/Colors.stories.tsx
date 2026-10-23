@@ -9,7 +9,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Two layers. **Palette** primitives are raw values built around the portfolio teal #31A3B4. **Semantic** tokens name an intent (text, background, border) and switch values in dark mode. Components only use the semantic layer — a unit test enforces it.',
+          'Two layers. **Palette** primitives are raw values built around Brand / Primary #BA4300, with its text grays #0D0D0D / #5D5D5D / #8F8F8F. **Semantic** tokens name an intent (text, background, border) and switch values in dark mode. Components only use the semantic layer — a unit test enforces it.',
       },
     },
   },
@@ -62,7 +62,7 @@ export const Palette: Story = {
                     key={t.name}
                     name={t.name.split('.').pop()!}
                     value={t.value}
-                    note={t.name === 'palette.teal.500' ? 'brand' : undefined}
+                    note={t.name === 'palette.orange.600' ? 'brand' : undefined}
                   />
                 ))}
             </Stack>
@@ -131,7 +131,7 @@ export const ContrastContract: Story = {
     docs: {
       description: {
         story:
-          'Every foreground/background pair the components use, checked against WCAG AA in both modes. The build fails if a token change breaks one. The original brand teal #31A3B4 measures 2.99:1 on white, which is why text uses teal-700 and buttons use teal-600.',
+          'Every foreground/background pair the components use, checked against WCAG AA in both modes. The build fails if a token change breaks one. White text measures 5.40:1 on Brand / Primary #BA4300 but only 3.74:1 on #D95F27 and 2.97:1 on #E07B42, which is why buttons use orange-600 and the lighter oranges only appear with dark text.',
       },
     },
   },

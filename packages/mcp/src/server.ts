@@ -71,7 +71,7 @@ export function createServer(): McpServer {
     {
       title: 'Search design tokens',
       description:
-        'Finds design tokens by intent ("button background", "muted text"), by name ("space"), or by value ("#31a3b4" returns the nearest colors). Returns the CSS variable to use. Call with no arguments for a table of contents.',
+        'Finds design tokens by intent ("button background", "muted text"), by name ("space"), or by value ("#ba4300" returns the nearest colors). Returns the CSS variable to use. Call with no arguments for a table of contents.',
       inputSchema: {
         query: z.string().optional().describe('Words, a token path prefix, or a hex/rgb color.'),
         type: z

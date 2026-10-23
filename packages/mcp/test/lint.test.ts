@@ -36,12 +36,12 @@ describe('check_styles', () => {
   });
 
   it('steers palette usage to semantic tokens by property', () => {
-    const [issue] = only('.a { background: var(--wf-palette-teal-600); }', 'palette-token');
+    const [issue] = only('.a { background: var(--wf-palette-orange-600); }', 'palette-token');
     expect(issue).toMatchObject({ severity: 'warning', suggestion: 'var(--wf-color-bg-brand)' });
   });
 
   it('maps a hard-coded color that matches a token', () => {
-    const [issue] = only('.a { color: #333333; }', 'raw-color');
+    const [issue] = only('.a { color: #0d0d0d; }', 'raw-color');
     expect(issue).toMatchObject({ severity: 'warning', suggestion: 'var(--wf-color-text-default)' });
   });
 
@@ -49,8 +49,8 @@ describe('check_styles', () => {
     const [issue] = only("<div style={{ backgroundColor: '#3b82f6' }} />", 'raw-color');
     expect(issue?.severity).toBe('error');
     expect(issue?.suggestion).toMatch(/^var\(--wf-color-bg-/);
-    // A saturated blue maps to a colored token (the brand), not the nearest gray.
-    expect(only("<p style={{ color: '#3b82f6' }} />", 'raw-color')[0]?.suggestion).toBe('var(--wf-color-text-brand)');
+    // A saturated orange maps to a colored token (the brand), not the nearest gray.
+    expect(only("<p style={{ color: '#c2410c' }} />", 'raw-color')[0]?.suggestion).toBe('var(--wf-color-text-brand)');
   });
 
   it('flags off-grid spacing and raw on-grid values differently', () => {
@@ -113,7 +113,7 @@ describe('check_styles', () => {
   <TextField placeholder="Email" />
   <Stack direction="row" gap={7}>
     <Button variant="tertiary">Cancel</Button>
-    <Button style={{ background: '#31a3b4', padding: 10, fontFamily: 'Inter' }}>Pay</Button>
+    <Button style={{ background: '#e07b42', padding: 10, fontFamily: 'Inter' }}>Pay</Button>
   </Stack>
   <p style={{ color: 'var(--wf-color-text-primary)' }}>Non-refundable.</p>
 </Card>`;

@@ -21,7 +21,7 @@ export type TokenTier = 'primitive' | 'semantic' | 'scale';
 export interface ResolvedValue {
   /** Final value after following every alias, e.g. "#267f8c". */
   value: string;
-  /** Token this one points at, if it is an alias, e.g. "palette.teal.600". */
+  /** Token this one points at, if it is an alias, e.g. "palette.orange.600". */
   aliasOf?: string;
 }
 

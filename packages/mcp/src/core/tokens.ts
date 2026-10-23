@@ -26,7 +26,7 @@ export const summarize = (t: ResolvedToken): TokenSummary => ({
 });
 
 export interface SearchTokensInput {
-  /** Free text ("button background"), a token name ("color.text"), or a color ("#31a3b4"). */
+  /** Free text ("button background"), a token name ("color.text"), or a color ("#ba4300"). */
   query?: string;
   type?: string;
   tier?: TokenTier;

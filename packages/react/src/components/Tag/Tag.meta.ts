@@ -13,7 +13,7 @@ export const tagMeta = defineMeta<TagOwnProps>()({
     tone: {
       type: "'neutral' | 'brand' | 'accent' | 'success' | 'warning' | 'danger'",
       default: "'neutral'",
-      description: 'Carries meaning. accent uses the original brand teal with dark text — use it sparingly for highlights.',
+      description: 'Carries meaning. accent uses the light brand orange with dark text — use it sparingly for highlights.',
     },
     size: { type: "'sm' | 'md'", default: "'md'", description: 'sm fits inside dense rows and table cells.' },
     children: { type: 'ReactNode', required: true, description: 'One to three words.' },

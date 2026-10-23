@@ -42,8 +42,9 @@ describe('resolveTokens', () => {
 });
 
 describe('Wayfind tokens', () => {
-  it('keeps the original brand teal as palette.teal.500', () => {
-    expect(getToken('palette.teal.500')?.value).toBe('#31a3b4');
+  it('keeps Brand / Primary as palette.orange.600 and the CTA fill', () => {
+    expect(getToken('palette.orange.600')?.value).toBe('#ba4300');
+    expect(getToken('color.bg.brand')?.aliasOf).toBe('palette.orange.600');
   });
 
   it('gives every semantic color a dark-mode value', () => {
@@ -63,7 +64,7 @@ describe('Wayfind tokens', () => {
 
   it('emits light values, a prefers-color-scheme block and an explicit dark theme', () => {
     const css = toCss(tokens);
-    expect(css).toContain('--wf-color-text-default: var(--wf-palette-neutral-800);');
+    expect(css).toContain('--wf-color-text-default: var(--wf-palette-neutral-950);');
     expect(css).toContain('@media (prefers-color-scheme: dark)');
     expect(css).toContain(':root[data-theme="dark"]');
   });
@@ -77,9 +78,10 @@ describe('accessibility contract', () => {
     expect(failures).toEqual([]);
   });
 
-  it('documents why the raw brand teal is not a text color', () => {
-    const ratio = contrastRatio(parseColor('#31a3b4')!, parseColor('#ffffff')!);
-    expect(ratio).toBeLessThan(3);
+  it('documents why the brighter oranges are not CTA fills', () => {
+    const white = parseColor('#ffffff')!;
+    expect(contrastRatio(parseColor('#d95f27')!, white)).toBeLessThan(4.5);
+    expect(contrastRatio(parseColor('#e07b42')!, white)).toBeLessThan(3);
   });
 });
 
