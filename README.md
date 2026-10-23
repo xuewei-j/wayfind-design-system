@@ -52,12 +52,12 @@ A typical agent loop: *list → get → write → `check_styles` → fix → `ch
 ```tsx
 <Stack direction="row" gap={7}>
   <Button variant="tertiary">Cancel</Button>
-  <Button style={{ background: '#31a3b4', padding: 10 }}>Pay now</Button>
+  <Button style={{ background: '#e07b42', padding: 10 }}>Pay now</Button>
 </Stack>
 <TextField placeholder="Email" />
 ```
 
-`check_styles` reports `gap={7}` (off the scale), `variant="tertiary"` (doesn't exist), the hard-coded brand teal
+`check_styles` reports `gap={7}` (off the scale), `variant="tertiary"` (doesn't exist), the hard-coded light orange
 (→ `var(--wf-color-bg-accent)`), `padding: 10` (→ `var(--wf-space-2)`) and the missing `label`. With `fix: true` the first
 four are rewritten; the label is left for the agent to write, because only it knows what the field is for.
 
@@ -92,7 +92,7 @@ import { Button, Stack, TextField } from '@wayfind/react';
 </Stack>
 ```
 
-Fonts: Chivo (400, 900) and Overpass (400–700) from Google Fonts.
+Fonts: none to load. The font tokens use the system stack, which is SF Pro on Apple platforms.
 
 ## How the pieces stay honest
 
@@ -118,8 +118,10 @@ pnpm audit:a11y    # after build-storybook; needs `pnpm --filter @wayfind/docs e
 
 Short version below; the reasoning and trade-offs are in [docs/DECISIONS.md](docs/DECISIONS.md).
 
-- **The brand teal isn't a text color.** `#31A3B4` from my portfolio measures 2.99:1 on white. It stays as an accent
-  (with dark text on it); text uses teal-700 (6.67:1) and buttons teal-600 with white text (4.67:1).
+- **Only Brand / Primary carries white text.** CTAs use `#BA4300` (5.40:1 with white). The lighter oranges `#D95F27`
+  (3.74:1) and `#E07B42` (2.97:1) fail AA with white, so they only appear as accents with dark text on them.
+- **Text and type follow the product design system.** Text grays `#0D0D0D` / `#5D5D5D` / `#8F8F8F`; SF Pro at 400 and 600,
+  with a 12–36px ramp where every size has its own line height and letter spacing.
 - **Two token layers.** Palette primitives → semantic intents (`color.text.muted`, `color.bg.brand`). Dark mode lives
   entirely in the semantic layer, so components don't know it exists.
 - **Plain CSS + data attributes** (`data-variant="primary"`) instead of CSS-in-JS: no runtime, works with any framework,
@@ -141,8 +143,8 @@ apps/
 
 ## Credits
 
-A project by **Xuewei Jiang** — product designer, [xueweijiang.com](https://www.xueweijiang.com). Brand colors and type
-come from the portfolio site; Chivo and Overpass are open-source (SIL OFL) and loaded from Google Fonts.
+A project by **Xuewei Jiang** — product designer, [xueweijiang.com](https://www.xueweijiang.com). Brand color, text colors and
+type follow the product design system (Brand / Primary `#BA4300`, SF Pro via the system font stack).
 
 Built in pair-programming sessions with Claude (Anthropic): I chose the concept, the brand and the scope; Claude wrote most
 of the implementation and proposed many of the details recorded in the decisions doc. Commits are co-authored accordingly.

@@ -30,7 +30,7 @@ only touches the build script.
 
 ## 3. Primitive and semantic layers, enforced
 
-**Context.** If components use `teal-600` directly, dark mode and re-theming mean editing every component.
+**Context.** If components use `orange-600` directly, dark mode and re-theming mean editing every component.
 
 **Decision.** `palette.*` holds raw values; `color.*` names intent (`color.text.muted`, `color.bg.brand`) and points at the
 palette per mode. Component CSS may only use semantic tokens — a test fails on any `--wf-palette-*` or raw color in a
@@ -38,25 +38,30 @@ component stylesheet, and `check_styles` gives agents the same rule.
 
 **Trade-off.** More tokens to name up front. Worth it: dark mode required zero component changes.
 
-## 4. The brand teal fails contrast — keep it anyway, with rules
+## 4. CTAs use Brand / Primary `#BA4300`, not the brighter oranges
 
-**Context.** The portfolio's teal `#31A3B4` measures **2.99:1** on white: below AA for body text (4.5:1) and, by 0.01, for
-large text (3:1). The site's muted gray `#AAAAAA` measures 2.32:1.
+**Context.** CTA mock-ups used `#D95F27` with a `#E07B42` hover. With white labels those measure **3.74:1** and **2.97:1**:
+both fail AA for button text (4.5:1). The product design system's Brand / Primary `#BA4300` measures **5.40:1**.
 
-**Decision.** Generate a teal scale around the brand color in OKLCH. Keep `#31A3B4` as `palette.teal.500` and use it only
-as an accent surface with near-black text (6.82:1). Text uses teal-700 (6.67:1); buttons use teal-600 with white text
-(4.67:1). Muted text becomes `#6B6B6B` (5.33:1). Every pairing the components use is listed in a contract and checked in
-both modes at build time.
+**Decision.** Build the orange scale around `#BA4300` (`palette.orange.600`) and make it `color.bg.brand`; hover goes
+darker (`orange-700`, 7.19:1), never lighter. `#E07B42` stays as `color.bg.accent` with near-black text (6.55:1). Text
+colors are the design system's grays: `#0D0D0D` primary, `#5D5D5D` secondary (5.93:1 even on the `#F3F3F3` fill), and
+`#8F8F8F` (3.23:1) for disabled text only. Every pairing the components use is listed in a contract and checked in both
+modes at build time.
 
-**Trade-off.** Buttons are a shade darker than the brand. The accent tag and accent surfaces keep the original color
-visible.
+**Trade-off.** The CTA is deeper than the mock-up's orange. The brighter oranges remain available for accents.
 
-## 5. Overpass instead of Interstate
+*Earlier version:* the system was built around the portfolio teal `#31A3B4` with Chivo and Overpass; it moved to the
+product design system's color and type.
 
-**Context.** The portfolio uses Interstate, a licensed Typekit font, which can't ship in an open-source repo.
+## 5. SF Pro through the system font stack
 
-**Decision.** Overpass (SIL OFL) for UI and body text. Both descend from the US highway signage typeface, which is also
-where the name *Wayfind* comes from. Chivo Black stays for display type, with the site's 0.07em tracking.
+**Context.** The product design system specifies SF Pro at 400 and 600. Apple's license doesn't allow serving SF Pro as
+a web font.
+
+**Decision.** `-apple-system, BlinkMacSystemFont, "SF Pro Text"…` for body and the `SF Pro Display` equivalent for
+headings: real SF Pro on Apple platforms, the platform UI font elsewhere, and no font download. The type ramp copies the
+spec — 36/40, 24/28, 18/26, 16/26, 14/18, 12/16 — with each size's own letter spacing as `font.letter-spacing.<step>`.
 
 ## 6. Square corners, a 4px grid, and typed spacing
 

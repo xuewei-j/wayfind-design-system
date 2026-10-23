@@ -2,7 +2,7 @@
 export const guidelines = `# Building with Wayfind
 
 Wayfind is a small design system for clear, calm, exhibition-like product UI:
-square corners, generous spacing, a teal brand voice, Chivo for display and Overpass for everything else.
+square corners, generous spacing, an orange brand voice (#BA4300) and SF Pro at 400 and 600.
 
 ## Setup
 \`\`\`tsx
@@ -10,7 +10,7 @@ import '@wayfind/tokens/tokens.css';   // CSS custom properties (light + dark)
 import '@wayfind/react/styles.css';    // component styles
 import { Button, Stack, TextField } from '@wayfind/react';
 \`\`\`
-Load the fonts once: Chivo (400, 900) and Overpass (400, 500, 600, 700) from Google Fonts.
+No web fonts to load: the font tokens use the system stack, which is SF Pro on Apple platforms.
 
 ## Rules
 1. **Reach for a component first.** Call \`list_components\`, then \`get_component\` for each one you use. Don't restyle raw HTML when a component exists.
@@ -20,7 +20,8 @@ Load the fonts once: Chivo (400, 900) and Overpass (400, 500, 600, 700) from Goo
 5. **Every input has a visible label.** Placeholders are not labels.
 6. **Headings follow the document outline.** One \`level={1}\` per page; change \`size\`, not \`level\`, for looks.
 7. **Color is never the only signal.** Tags and Alerts always carry text.
-8. **The raw brand teal (#31a3b4) is not a text color.** It is 2.99:1 on white. Use \`color.text.brand\` for text and \`color.bg.accent\` + \`color.text.on-accent\` for decorative highlights.
+8. **Only #BA4300 carries white text.** The lighter oranges #D95F27 (3.74:1) and #E07B42 (2.97:1) fail AA with white. Use \`color.bg.brand\` for CTAs and \`color.bg.accent\` + \`color.text.on-accent\` for decorative highlights.
+9. **Set type with matching tokens.** Pair \`font.size.<step>\` with \`font.line-height.<step>\` and \`font.letter-spacing.<step>\`; weights are 400 and 600.
 
 ## Voice
 Short, concrete, verb-first. "Book tickets", not "Submit". Errors say how to fix the problem.

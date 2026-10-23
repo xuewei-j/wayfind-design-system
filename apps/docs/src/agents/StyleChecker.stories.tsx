@@ -11,7 +11,7 @@ export function TicketForm() {
       <TextField placeholder="Email" />
       <Stack direction="row" gap={7}>
         <Button variant="tertiary">Cancel</Button>
-        <Button style={{ background: '#31a3b4', padding: 10 }}>Pay now</Button>
+        <Button style={{ background: '#e07b42', padding: 10 }}>Pay now</Button>
       </Stack>
       <p style={{ color: 'var(--wf-color-text-primary)', fontFamily: 'Inter' }}>
         Tickets are non-refundable.
