@@ -45,6 +45,7 @@ export const buttonMeta = defineMeta<ButtonOwnProps>()({
     'While loading it uses aria-disabled + aria-busy instead of disabled, so keyboard focus is not lost.',
     'All variant text/background pairs meet WCAG AA 4.5:1 in light and dark mode (enforced by the token contract tests).',
     'Visible 2px focus ring using color.focus.ring (≥3:1 against surfaces).',
+    'The secondary outline (color.border.default) is decorative: the text label identifies the button, so it is not held to the 3:1 non-text contrast rule.',
     'md and lg sizes meet the 40px+ touch target guideline; use sm only in dense desktop UI.',
   ],
   tokens: [
@@ -55,7 +56,6 @@ export const buttonMeta = defineMeta<ButtonOwnProps>()({
     'color.bg.surface',
     'color.bg.subtle',
     'color.text.default',
-    'color.border.strong',
     'color.bg.brand-subtle',
     'color.text.brand',
     'color.bg.danger',

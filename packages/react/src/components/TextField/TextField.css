@@ -19,9 +19,9 @@
 
 .wf-field__input {
   min-height: var(--wf-size-control-md);
-  padding: 0 var(--wf-space-3);
+  padding: 0 var(--wf-space-4);
   border: var(--wf-border-width-thin) solid var(--wf-color-border-strong);
-  border-radius: var(--wf-radius-sm);
+  border-radius: var(--wf-radius-pill);
   background: var(--wf-color-bg-surface);
   color: var(--wf-color-text-default);
   font: inherit;
@@ -80,7 +80,7 @@
 
 .wf-field[data-size='lg'] .wf-field__input {
   min-height: var(--wf-size-control-lg);
-  padding: 0 var(--wf-space-4);
+  padding: 0 var(--wf-space-5);
   font-size: var(--wf-font-size-lg);
   letter-spacing: var(--wf-font-letter-spacing-lg);
 }

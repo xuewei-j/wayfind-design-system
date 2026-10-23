@@ -8,7 +8,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A 4px grid in rem. Corners stay nearly square, like gallery wall labels — rounding is reserved for pills. `Stack` turns the space scale into a prop, so off-grid gaps are a type error.',
+          'A 4px grid in rem. Everything is rounded: buttons, fields and tags are pills; cards and alerts use 16px corners. `Stack` turns the space scale into a prop, so off-grid gaps are a type error.',
       },
     },
   },

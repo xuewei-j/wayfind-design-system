@@ -63,11 +63,14 @@ a web font.
 headings: real SF Pro on Apple platforms, the platform UI font elsewhere, and no font download. The type ramp copies the
 spec — 36/40, 24/28, 18/26, 16/26, 14/18, 12/16 — with each size's own letter spacing as `font.letter-spacing.<step>`.
 
-## 6. Square corners, a 4px grid, and typed spacing
+## 6. Rounded corners, a 4px grid, and typed spacing
 
-**Decision.** Radii of 2–8px (pills excepted), like gallery wall labels. Spacing in rem on a 4px grid. `Stack`'s `gap`
-prop only accepts steps on the scale (`0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16`), so off-grid spacing is a compile
-error rather than a review comment.
+**Decision.** Everything is rounded, following the product design system's pill CTAs. Controls — buttons, text fields
+and tags — are pills; containers — cards and alerts — use `radius.lg` (16px). The secondary button uses the light
+`#E8E8E8` outline: its label identifies it, so the outline is decorative and not held to the 3:1 non-text contrast rule.
+Text fields have no label inside the box, so their border must reach 3:1; it uses the palette gray `#8F8F8F` (3.23:1)
+rather than near-black. Spacing in rem on a 4px grid. `Stack`'s `gap` prop only accepts steps on the scale
+(`0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16`), so off-grid spacing is a compile error rather than a review comment.
 
 ## 7. Plain CSS with data attributes, not CSS-in-JS
 

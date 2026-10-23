@@ -12,7 +12,7 @@
   min-height: var(--wf-size-control-md);
   padding: 0 var(--wf-space-5);
   border: var(--wf-border-width-thin) solid var(--_border);
-  border-radius: var(--wf-radius-sm);
+  border-radius: var(--wf-radius-pill);
   background: var(--_bg);
   color: var(--_fg);
   font-family: var(--wf-font-family-body);
@@ -40,7 +40,8 @@
   --_bg: var(--wf-color-bg-surface);
   --_bg-hover: var(--wf-color-bg-subtle);
   --_fg: var(--wf-color-text-default);
-  --_border: var(--wf-color-border-strong);
+  /* Light, decorative outline: the label already identifies the control (WCAG 1.4.11). */
+  --_border: var(--wf-color-border-default);
 }
 
 .wf-button[data-variant='ghost'] {

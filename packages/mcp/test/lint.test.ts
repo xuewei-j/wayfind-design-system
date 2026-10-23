@@ -62,11 +62,11 @@ describe('check_styles', () => {
   });
 
   it('understands React style objects (unitless px, camelCase)', () => {
-    const issues = checkStyles('<div style={{ marginTop: 10, fontSize: 17, borderRadius: 6 }} />').issues;
+    const issues = checkStyles('<div style={{ marginTop: 10, fontSize: 17, borderRadius: 7 }} />').issues;
     expect(issues.map((i) => [i.rule, i.found, i.suggestion])).toEqual([
       ['off-scale', '10', 'var(--wf-space-2)'],
       ['off-scale', '17', 'var(--wf-font-size-md)'],
-      ['off-scale', '6', 'var(--wf-radius-md)'],
+      ['off-scale', '7', 'var(--wf-radius-md)'],
     ]);
   });
 

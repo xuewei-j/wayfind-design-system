@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: var(--wf-space-3);
   border: var(--wf-border-width-thin) solid var(--wf-color-border-default);
-  border-radius: var(--wf-radius-md);
+  border-radius: var(--wf-radius-lg);
   background: var(--wf-color-bg-surface);
   color: var(--wf-color-text-default);
   font-family: var(--wf-font-family-body);

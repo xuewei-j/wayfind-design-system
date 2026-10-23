@@ -2,7 +2,7 @@
 export const guidelines = `# Building with Wayfind
 
 Wayfind is a small design system for clear, calm, exhibition-like product UI:
-square corners, generous spacing, an orange brand voice (#BA4300) and SF Pro at 400 and 600.
+rounded corners (pill-shaped controls, 16px cards), generous spacing, an orange brand voice (#BA4300) and SF Pro at 400 and 600.
 
 ## Setup
 \`\`\`tsx

@@ -6,9 +6,9 @@
   display: inline-flex;
   align-items: center;
   gap: var(--wf-space-1);
-  padding: var(--wf-space-1) var(--wf-space-2);
+  padding: var(--wf-space-1) var(--wf-space-3);
   border: var(--wf-border-width-thin) solid var(--_border);
-  border-radius: var(--wf-radius-sm);
+  border-radius: var(--wf-radius-pill);
   background: var(--_bg);
   color: var(--_fg);
   font-family: var(--wf-font-family-body);
@@ -20,7 +20,7 @@
 }
 
 .wf-tag[data-size='sm'] {
-  padding: 0 var(--wf-space-1);
+  padding: 0 var(--wf-space-2);
   font-size: var(--wf-font-size-xs);
   letter-spacing: var(--wf-font-letter-spacing-xs);
   line-height: var(--wf-font-line-height-xs);

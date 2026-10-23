@@ -81,7 +81,7 @@ function StyleChecker() {
               minHeight: '26rem',
               padding: 'var(--wf-space-3)',
               border: 'var(--wf-border-width-thin) solid var(--wf-color-border-strong)',
-              borderRadius: 'var(--wf-radius-sm)',
+              borderRadius: 'var(--wf-radius-md)',
               background: 'var(--wf-color-bg-surface)',
               color: 'var(--wf-color-text-default)',
               fontFamily: 'var(--wf-font-family-mono)',
