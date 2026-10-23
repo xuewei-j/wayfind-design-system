@@ -1,0 +1,23 @@
+{
+  "name": "wayfind-design-system",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A small design system for humans and AI agents: design tokens, a React component library, Storybook docs, and an MCP server that lets agents build on-brand UI.",
+  "type": "module",
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "build": "pnpm --filter \"./packages/*\" build",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "storybook": "pnpm --filter @wayfind/docs storybook",
+    "build-storybook": "pnpm --filter @wayfind/docs build-storybook",
+    "mcp": "node packages/mcp/dist/bin.js",
+    "ci": "pnpm build && pnpm typecheck && pnpm test && pnpm build-storybook && pnpm audit:a11y",
+    "audit:a11y": "pnpm --filter @wayfind/docs audit:a11y"
+  },
+  "author": "Xuewei Jiang (https://www.xueweijiang.com)",
+  "license": "MIT"
+}
