@@ -146,7 +146,7 @@ apps/
 A project by **Xuewei Jiang** — product designer, [xueweijiang.com](https://www.xueweijiang.com). Brand color, text colors and
 type follow the product design system (Brand / Primary `#BA4300`, SF Pro via the system font stack).
 
-Built in pair-programming sessions with Claude (Anthropic): I chose the concept, the brand and the scope; Claude wrote most
-of the implementation and proposed many of the details recorded in the decisions doc. Commits are co-authored accordingly.
+Built in pair-programming sessions with Claude (Anthropic): I set the concept, brand, scope and design direction, and we
+built the implementation together. Commits are co-authored accordingly.
 
 MIT licensed.
