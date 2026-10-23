@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "wayfind": {
+      "command": "node",
+      "args": ["packages/mcp/dist/bin.js"]
+    }
+  }
+}
