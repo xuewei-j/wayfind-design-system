@@ -1,0 +1,7 @@
+body,
+.sb-show-main,
+.sbdocs-preview .docs-story {
+  background: var(--wf-color-bg-canvas);
+  color: var(--wf-color-text-default);
+  font-family: var(--wf-font-family-body);
+}

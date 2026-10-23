@@ -1,0 +1,48 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduction" />
+
+# Wayfind
+
+**A small design system for humans and AI agents.**
+
+More and more UI is written by AI agents — in Cursor, Claude Code, ChatGPT. They write fast, but they don't know your design
+system: they hard-code `#3b82f6`, invent a `variant="tertiary"`, and leave fields without labels. Wayfind is an experiment
+in giving a design system a second audience. Everything a designer documents for people is also served, through an
+[MCP](https://modelcontextprotocol.io) server, to the agents writing the code.
+
+## What's inside
+
+- **`@wayfind/tokens`** — design tokens in the W3C DTCG format. One JSON file becomes CSS variables, a typed JS API, and an
+  accessibility contract that fails the build if a color pair drops below WCAG AA.
+- **`@wayfind/react`** — eight accessible React components, plus a **registry**: machine-readable docs for each one (props,
+  do/don't, accessibility notes, examples).
+- **`@wayfind/mcp`** — an MCP server that hands agents the registry and tokens, with a `check_styles` linter that catches
+  and fixes off-system code.
+- **`@wayfind/docs`** — this Storybook. Component docs pages are generated from the same registry entries the agents read.
+
+## One source, two audiences
+
+```
+tokens.json ──┬──► tokens.css ───────────────► components ──► Storybook (people)
+              └──► token API ──┐
+component registry ────────────┴──► MCP server ──► Claude / Cursor / ChatGPT (agents)
+```
+
+Tests keep the two in sync: every prop must be documented, every color token a component's CSS uses must appear in its
+registry entry, and the component library must pass its own linter.
+
+## Where to start
+
+- **Foundations → Colors → Contrast contract** — why the brand teal `#31A3B4` (2.99:1 on white) isn't used for text.
+- **Patterns → Exhibition booking** — a full page built only from the system. Toggle dark mode in the toolbar.
+- **Agents → Style checker** — paste AI-generated code and watch it get linted and fixed.
+
+## The brand
+
+Colors and type come from my portfolio, [xueweijiang.com](https://www.xueweijiang.com): teal `#31A3B4`, Chivo Black for
+display type, and Overpass standing in for the site's licensed Interstate — both typefaces trace back to US highway
+signage, which is where the name *Wayfind* comes from. Corners stay nearly square, like gallery wall labels — a nod to
+my training in exhibition and experience design.
+
+A project by Xuewei Jiang, built in pair-programming sessions with Claude (Anthropic).
