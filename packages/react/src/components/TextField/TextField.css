@@ -9,7 +9,8 @@
   color: var(--wf-color-text-default);
   font-size: var(--wf-font-size-sm);
   font-weight: var(--wf-font-weight-semibold);
-  letter-spacing: var(--wf-font-letter-spacing-wide);
+  letter-spacing: var(--wf-font-letter-spacing-sm);
+  line-height: var(--wf-font-line-height-sm);
 }
 
 .wf-field__required {
@@ -25,6 +26,7 @@
   color: var(--wf-color-text-default);
   font: inherit;
   font-size: var(--wf-font-size-md);
+  letter-spacing: var(--wf-font-letter-spacing-md);
   transition: border-color var(--wf-motion-duration-fast) var(--wf-motion-easing-standard);
 }
 
@@ -57,7 +59,8 @@
 .wf-field__error {
   margin: 0;
   font-size: var(--wf-font-size-sm);
-  line-height: var(--wf-font-line-height-snug);
+  letter-spacing: var(--wf-font-letter-spacing-sm);
+  line-height: var(--wf-font-line-height-sm);
 }
 
 .wf-field__hint {
@@ -66,16 +69,18 @@
 
 .wf-field__error {
   color: var(--wf-color-text-danger);
-  font-weight: var(--wf-font-weight-medium);
+  font-weight: var(--wf-font-weight-semibold);
 }
 
 .wf-field[data-size='sm'] .wf-field__input {
   min-height: var(--wf-size-control-sm);
   font-size: var(--wf-font-size-sm);
+  letter-spacing: var(--wf-font-letter-spacing-sm);
 }
 
 .wf-field[data-size='lg'] .wf-field__input {
   min-height: var(--wf-size-control-lg);
   padding: 0 var(--wf-space-4);
   font-size: var(--wf-font-size-lg);
+  letter-spacing: var(--wf-font-letter-spacing-lg);
 }

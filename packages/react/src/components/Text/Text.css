@@ -3,19 +3,21 @@
   color: var(--wf-color-text-default);
   font-family: var(--wf-font-family-body);
   font-size: var(--wf-font-size-md);
-  line-height: var(--wf-font-line-height-normal);
+  letter-spacing: var(--wf-font-letter-spacing-md);
+  line-height: var(--wf-font-line-height-md);
   text-wrap: pretty;
 }
 
 .wf-text[data-size='sm'] {
   font-size: var(--wf-font-size-sm);
-  line-height: var(--wf-font-line-height-snug);
+  letter-spacing: var(--wf-font-letter-spacing-sm);
+  line-height: var(--wf-font-line-height-sm);
 }
 
 .wf-text[data-size='lg'] {
   font-size: var(--wf-font-size-lg);
-  line-height: var(--wf-font-line-height-relaxed);
-  letter-spacing: var(--wf-font-letter-spacing-wide);
+  letter-spacing: var(--wf-font-letter-spacing-lg);
+  line-height: var(--wf-font-line-height-lg);
 }
 
 .wf-text[data-tone='muted'] {

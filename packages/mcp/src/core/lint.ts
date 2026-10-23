@@ -273,7 +273,7 @@ export function checkStyles(code: string): StyleReport {
     const valueStart = m.index! + m[0].length - rawValue.length;
 
     if (property === 'font-family') {
-      if (/var\(--wf-font-family|chivo|overpass|monospace|inherit/i.test(rawValue)) continue;
+      if (/var\(--wf-font-family|sf pro|-apple-system|system-ui|monospace|inherit/i.test(rawValue)) continue;
       const trimmed = rawValue.replace(/[\s,]+$/, '');
       const quote = /^['"`]/.test(trimmed) ? trimmed[0]! : '';
       add(valueStart, {

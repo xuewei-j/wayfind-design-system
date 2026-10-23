@@ -1,11 +1,4 @@
 import type { Decorator, Preview } from '@storybook/react-vite';
-// Self-hosted fonts (SIL OFL): no third-party requests, and they render offline.
-import '@fontsource/chivo/400.css';
-import '@fontsource/chivo/900.css';
-import '@fontsource/overpass/400.css';
-import '@fontsource/overpass/500.css';
-import '@fontsource/overpass/600.css';
-import '@fontsource/overpass/700.css';
 import '@wayfind/tokens/tokens.css';
 import '@wayfind/react/styles.css';
 import './preview.css';

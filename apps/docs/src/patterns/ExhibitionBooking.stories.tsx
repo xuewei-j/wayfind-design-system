@@ -86,7 +86,7 @@ function ExhibitionPage() {
         wrap
         style={{ padding: `var(--wf-space-5) ${gutter}`, borderBottom: 'var(--wf-border-width-thin) solid var(--wf-color-border-default)' }}
       >
-        <Text weight="bold" style={{ fontFamily: 'var(--wf-font-family-display)', letterSpacing: 'var(--wf-font-letter-spacing-display)' }}>
+        <Text weight="semibold" style={{ fontFamily: 'var(--wf-font-family-display)' }}>
           WAYFIND MUSEUM
         </Text>
         <Stack as="nav" direction="row" gap={2} wrap aria-label="Main">

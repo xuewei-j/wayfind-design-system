@@ -26,12 +26,6 @@ importers:
         specifier: ^19.2.0
         version: 19.3.1(react@19.3.1)
     devDependencies:
-      '@fontsource/chivo':
-        specifier: ^5.3.0
-        version: 5.3.0
-      '@fontsource/overpass':
-        specifier: ^5.3.0
-        version: 5.3.0
       '@storybook/addon-a11y':
         specifier: ^10.6.3
         version: 10.6.3(storybook@10.6.3(@types/react@19.3.0)(react@19.3.1))
@@ -591,12 +585,6 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
-
-  '@fontsource/chivo@5.3.0':
-    resolution: {integrity: sha512-bPZQPY1qQ5jOd/UN/yucUbNu7O1xaY6bmE+ctMJrXFIiw6qN5qq1f4xrH6GFPIKTnmMDYWy06lIzDAh23crrEw==}
-
-  '@fontsource/overpass@5.3.0':
-    resolution: {integrity: sha512-601DJ9xb8+8XbxAS05+lkh9cW6wc4TnXL2vhQBUN6PrtE/mQTgxqrqac7rXkthyJO7c3KMHOpl9Tt0sRql1p5Q==}
 
   '@hono/node-server@2.1.5':
     resolution: {integrity: sha512-MgP/I06GdvsilDspMk/qmRzpk8LOUStP6jFAbSRi40W09DhoyUn+Mj7eyKICPqeYKybOjVFLVIAQzvu1bfIa7Q==}
@@ -2699,10 +2687,6 @@ snapshots:
 
   '@esbuild/win32-x64@0.28.2':
     optional: true
-
-  '@fontsource/chivo@5.3.0': {}
-
-  '@fontsource/overpass@5.3.0': {}
 
   '@hono/node-server@2.1.5(hono@4.13.13)':
     dependencies:

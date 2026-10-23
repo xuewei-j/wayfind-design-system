@@ -12,7 +12,7 @@ export const headingMeta = defineMeta<HeadingOwnProps>()({
     level: { type: '1 | 2 | 3 | 4', required: true, description: 'Outline level. Pick by structure: one h1 per page, no skipped levels.' },
     size: {
       type: "'display' | 'xl' | 'lg' | 'md'",
-      description: 'Visual size. Defaults by level (1 → display, 2 → xl, 3 → lg, 4 → md). display uses Chivo Black with wide tracking.',
+      description: 'Visual size. Defaults by level (1 → display, 2 → xl, 3 → lg, 4 → md). display is heading1 (36px), xl heading2 (24px), lg heading3 (18px), md body emphasized (16px).',
     },
     tone: { type: "'default' | 'brand'", default: "'default'", description: 'brand renders in color.text.brand.' },
     children: { type: 'ReactNode', required: true, description: 'Title text.' },
@@ -37,7 +37,7 @@ export const headingMeta = defineMeta<HeadingOwnProps>()({
   examples: [
     { title: 'Page title', code: '<Heading level={1}>Hi, this is Xuewei</Heading>' },
     { title: 'Card title', code: '<Heading level={3}>Light & Shadow</Heading>' },
-    { title: 'Small, brand-colored eyebrow', code: '<Heading level={2} size="md" tone="brand">Now showing</Heading>' },
+    { title: 'Small, brand-colored label', code: '<Heading level={2} size="md" tone="brand">Now showing</Heading>' },
   ],
   related: ['Text'],
 });

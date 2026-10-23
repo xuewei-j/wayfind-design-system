@@ -86,7 +86,7 @@ function StyleChecker() {
               color: 'var(--wf-color-text-default)',
               fontFamily: 'var(--wf-font-family-mono)',
               fontSize: 'var(--wf-font-size-sm)',
-              lineHeight: 'var(--wf-font-line-height-normal)',
+              lineHeight: 'var(--wf-font-line-height-md)',
               resize: 'vertical',
             }}
           />

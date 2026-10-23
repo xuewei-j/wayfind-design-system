@@ -18,8 +18,8 @@
   font-family: var(--wf-font-family-body);
   font-size: var(--wf-font-size-md);
   font-weight: var(--wf-font-weight-semibold);
-  letter-spacing: var(--wf-font-letter-spacing-wide);
-  line-height: var(--wf-font-line-height-tight);
+  letter-spacing: var(--wf-font-letter-spacing-md);
+  line-height: var(--wf-font-line-height-md);
   text-decoration: none;
   cursor: pointer;
   transition:
@@ -59,12 +59,16 @@
   min-height: var(--wf-size-control-sm);
   padding: 0 var(--wf-space-3);
   font-size: var(--wf-font-size-sm);
+  letter-spacing: var(--wf-font-letter-spacing-sm);
+  line-height: var(--wf-font-line-height-sm);
 }
 
 .wf-button[data-size='lg'] {
   min-height: var(--wf-size-control-lg);
   padding: 0 var(--wf-space-6);
   font-size: var(--wf-font-size-lg);
+  letter-spacing: var(--wf-font-letter-spacing-lg);
+  line-height: var(--wf-font-line-height-lg);
 }
 
 .wf-button[data-full-width] {

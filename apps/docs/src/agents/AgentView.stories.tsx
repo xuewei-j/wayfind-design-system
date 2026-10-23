@@ -12,7 +12,7 @@ const pre = {
   border: 'var(--wf-border-width-thin) solid var(--wf-color-border-default)',
   fontFamily: 'var(--wf-font-family-mono)',
   fontSize: 'var(--wf-font-size-sm)',
-  lineHeight: 'var(--wf-font-line-height-snug)',
+  lineHeight: 'var(--wf-font-line-height-sm)',
   whiteSpace: 'pre-wrap' as const,
 };
 

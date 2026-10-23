@@ -14,15 +14,16 @@
   font-family: var(--wf-font-family-body);
   font-size: var(--wf-font-size-sm);
   font-weight: var(--wf-font-weight-semibold);
-  letter-spacing: var(--wf-font-letter-spacing-wide);
-  line-height: var(--wf-font-line-height-tight);
-  text-transform: uppercase;
+  letter-spacing: var(--wf-font-letter-spacing-sm);
+  line-height: var(--wf-font-line-height-sm);
   white-space: nowrap;
 }
 
 .wf-tag[data-size='sm'] {
   padding: 0 var(--wf-space-1);
   font-size: var(--wf-font-size-xs);
+  letter-spacing: var(--wf-font-letter-spacing-xs);
+  line-height: var(--wf-font-line-height-xs);
 }
 
 .wf-tag[data-tone='brand'] {
