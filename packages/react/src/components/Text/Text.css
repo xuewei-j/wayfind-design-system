@@ -1,0 +1,55 @@
+.wf-text {
+  margin: 0;
+  color: var(--wf-color-text-default);
+  font-family: var(--wf-font-family-body);
+  font-size: var(--wf-font-size-md);
+  line-height: var(--wf-font-line-height-normal);
+  text-wrap: pretty;
+}
+
+.wf-text[data-size='sm'] {
+  font-size: var(--wf-font-size-sm);
+  line-height: var(--wf-font-line-height-snug);
+}
+
+.wf-text[data-size='lg'] {
+  font-size: var(--wf-font-size-lg);
+  line-height: var(--wf-font-line-height-relaxed);
+  letter-spacing: var(--wf-font-letter-spacing-wide);
+}
+
+.wf-text[data-tone='muted'] {
+  color: var(--wf-color-text-muted);
+}
+
+.wf-text[data-tone='brand'] {
+  color: var(--wf-color-text-brand);
+}
+
+.wf-text[data-tone='success'] {
+  color: var(--wf-color-text-success);
+}
+
+.wf-text[data-tone='warning'] {
+  color: var(--wf-color-text-warning);
+}
+
+.wf-text[data-tone='danger'] {
+  color: var(--wf-color-text-danger);
+}
+
+.wf-text[data-weight='regular'] {
+  font-weight: var(--wf-font-weight-regular);
+}
+
+.wf-text[data-weight='medium'] {
+  font-weight: var(--wf-font-weight-medium);
+}
+
+.wf-text[data-weight='semibold'] {
+  font-weight: var(--wf-font-weight-semibold);
+}
+
+.wf-text[data-weight='bold'] {
+  font-weight: var(--wf-font-weight-bold);
+}

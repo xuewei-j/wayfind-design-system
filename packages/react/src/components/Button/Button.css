@@ -1,0 +1,125 @@
+.wf-button {
+  --_bg: var(--wf-color-bg-brand);
+  --_bg-hover: var(--wf-color-bg-brand-hover);
+  --_fg: var(--wf-color-text-on-brand);
+  --_border: transparent;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--wf-space-2);
+  min-height: var(--wf-size-control-md);
+  padding: 0 var(--wf-space-5);
+  border: var(--wf-border-width-thin) solid var(--_border);
+  border-radius: var(--wf-radius-sm);
+  background: var(--_bg);
+  color: var(--_fg);
+  font-family: var(--wf-font-family-body);
+  font-size: var(--wf-font-size-md);
+  font-weight: var(--wf-font-weight-semibold);
+  letter-spacing: var(--wf-font-letter-spacing-wide);
+  line-height: var(--wf-font-line-height-tight);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--wf-motion-duration-fast) var(--wf-motion-easing-standard),
+    border-color var(--wf-motion-duration-fast) var(--wf-motion-easing-standard);
+}
+
+.wf-button:hover:not(:disabled, [aria-disabled='true']) {
+  background: var(--_bg-hover);
+}
+
+.wf-button:focus-visible {
+  outline: var(--wf-border-width-thick) solid var(--wf-color-focus-ring);
+  outline-offset: var(--wf-border-width-thick);
+}
+
+.wf-button[data-variant='secondary'] {
+  --_bg: var(--wf-color-bg-surface);
+  --_bg-hover: var(--wf-color-bg-subtle);
+  --_fg: var(--wf-color-text-default);
+  --_border: var(--wf-color-border-strong);
+}
+
+.wf-button[data-variant='ghost'] {
+  --_bg: transparent;
+  --_bg-hover: var(--wf-color-bg-brand-subtle);
+  --_fg: var(--wf-color-text-brand);
+}
+
+.wf-button[data-variant='danger'] {
+  --_bg: var(--wf-color-bg-danger);
+  --_bg-hover: var(--wf-color-bg-danger-hover);
+  --_fg: var(--wf-color-text-on-danger);
+}
+
+.wf-button[data-size='sm'] {
+  min-height: var(--wf-size-control-sm);
+  padding: 0 var(--wf-space-3);
+  font-size: var(--wf-font-size-sm);
+}
+
+.wf-button[data-size='lg'] {
+  min-height: var(--wf-size-control-lg);
+  padding: 0 var(--wf-space-6);
+  font-size: var(--wf-font-size-lg);
+}
+
+.wf-button[data-full-width] {
+  display: flex;
+  width: 100%;
+}
+
+.wf-button:disabled {
+  --_bg: var(--wf-color-bg-subtle);
+  --_fg: var(--wf-color-text-disabled);
+  --_border: var(--wf-color-border-default);
+  cursor: not-allowed;
+}
+
+.wf-button__icon {
+  display: inline-flex;
+  font-size: 1.125em;
+}
+
+/* Loading: hide content but keep its width so the layout doesn't jump.
+   opacity (not visibility: hidden) keeps the label in the accessibility tree,
+   so the button keeps its accessible name while busy. */
+.wf-button[data-loading] {
+  cursor: progress;
+}
+
+.wf-button[data-loading] > .wf-button__label,
+.wf-button[data-loading] > .wf-button__icon {
+  opacity: 0;
+}
+
+.wf-button__spinner {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 1em;
+  height: 1em;
+  border: var(--wf-border-width-thick) solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--wf-radius-pill);
+  animation: wf-spin 720ms linear infinite;
+}
+
+@keyframes wf-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wf-button {
+    transition: none;
+  }
+
+  .wf-button__spinner {
+    animation-duration: 2s;
+  }
+}

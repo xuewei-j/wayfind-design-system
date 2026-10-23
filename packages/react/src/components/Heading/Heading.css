@@ -1,0 +1,35 @@
+.wf-heading {
+  margin: 0;
+  color: var(--wf-color-text-default);
+  font-family: var(--wf-font-family-body);
+  font-weight: var(--wf-font-weight-semibold);
+  line-height: var(--wf-font-line-height-snug);
+  text-wrap: balance;
+}
+
+/* Display: Chivo Black with wide tracking — the portfolio's headline voice. */
+.wf-heading[data-size='display'] {
+  font-family: var(--wf-font-family-display);
+  font-size: var(--wf-font-size-3xl);
+  font-weight: var(--wf-font-weight-black);
+  letter-spacing: var(--wf-font-letter-spacing-display);
+  line-height: var(--wf-font-line-height-tight);
+}
+
+.wf-heading[data-size='xl'] {
+  font-size: var(--wf-font-size-xl);
+}
+
+.wf-heading[data-size='lg'] {
+  font-size: var(--wf-font-size-lg);
+}
+
+.wf-heading[data-size='md'] {
+  font-size: var(--wf-font-size-md);
+  letter-spacing: var(--wf-font-letter-spacing-wide);
+  text-transform: uppercase;
+}
+
+.wf-heading[data-tone='brand'] {
+  color: var(--wf-color-text-brand);
+}

@@ -1,0 +1,81 @@
+.wf-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wf-space-1);
+  font-family: var(--wf-font-family-body);
+}
+
+.wf-field__label {
+  color: var(--wf-color-text-default);
+  font-size: var(--wf-font-size-sm);
+  font-weight: var(--wf-font-weight-semibold);
+  letter-spacing: var(--wf-font-letter-spacing-wide);
+}
+
+.wf-field__required {
+  color: var(--wf-color-text-danger);
+}
+
+.wf-field__input {
+  min-height: var(--wf-size-control-md);
+  padding: 0 var(--wf-space-3);
+  border: var(--wf-border-width-thin) solid var(--wf-color-border-strong);
+  border-radius: var(--wf-radius-sm);
+  background: var(--wf-color-bg-surface);
+  color: var(--wf-color-text-default);
+  font: inherit;
+  font-size: var(--wf-font-size-md);
+  transition: border-color var(--wf-motion-duration-fast) var(--wf-motion-easing-standard);
+}
+
+.wf-field__input::placeholder {
+  color: var(--wf-color-text-muted);
+}
+
+.wf-field__input:hover:not(:disabled) {
+  border-color: var(--wf-color-border-brand);
+}
+
+.wf-field__input:focus-visible {
+  outline: var(--wf-border-width-thick) solid var(--wf-color-focus-ring);
+  outline-offset: 0;
+  border-color: var(--wf-color-border-brand);
+}
+
+.wf-field__input:disabled {
+  background: var(--wf-color-bg-subtle);
+  color: var(--wf-color-text-disabled);
+  border-color: var(--wf-color-border-default);
+  cursor: not-allowed;
+}
+
+.wf-field[data-invalid] .wf-field__input {
+  border-color: var(--wf-color-border-danger);
+}
+
+.wf-field__hint,
+.wf-field__error {
+  margin: 0;
+  font-size: var(--wf-font-size-sm);
+  line-height: var(--wf-font-line-height-snug);
+}
+
+.wf-field__hint {
+  color: var(--wf-color-text-muted);
+}
+
+.wf-field__error {
+  color: var(--wf-color-text-danger);
+  font-weight: var(--wf-font-weight-medium);
+}
+
+.wf-field[data-size='sm'] .wf-field__input {
+  min-height: var(--wf-size-control-sm);
+  font-size: var(--wf-font-size-sm);
+}
+
+.wf-field[data-size='lg'] .wf-field__input {
+  min-height: var(--wf-size-control-lg);
+  padding: 0 var(--wf-space-4);
+  font-size: var(--wf-font-size-lg);
+}
