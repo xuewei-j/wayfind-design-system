@@ -57,8 +57,8 @@ A typical agent loop: *list → get → write → `check_styles` → fix → `ch
 <TextField placeholder="Email" />
 ```
 
-`check_styles` reports `gap={7}` (off the scale), `variant="tertiary"` (doesn't exist), the hard-coded light orange
-(→ `var(--wf-color-bg-accent)`), `padding: 10` (→ `var(--wf-space-2)`) and the missing `label`. With `fix: true` the first
+`check_styles` reports `gap={7}` (off the scale), `variant="tertiary"` (doesn't exist), the hard-coded light orange, which fails contrast
+with white text (→ `var(--wf-color-bg-brand)`), `padding: 10` (→ `var(--wf-space-2)`) and the missing `label`. With `fix: true` the first
 four are rewritten; the label is left for the agent to write, because only it knows what the field is for.
 
 ### Use it
@@ -119,7 +119,7 @@ pnpm audit:a11y    # after build-storybook; needs `pnpm --filter @wayfind/docs e
 Short version below; the reasoning and trade-offs are in [docs/DECISIONS.md](docs/DECISIONS.md).
 
 - **Only Brand / Primary carries white text.** CTAs use `#BA4300` (5.40:1 with white). The lighter oranges `#D95F27`
-  (3.74:1) and `#E07B42` (2.97:1) fail AA with white, so they only appear as accents with dark text on them.
+  (3.74:1) and `#E07B42` (2.97:1) fail AA with white, so they never carry white text.
 - **Text and type follow the product design system.** Text grays `#0D0D0D` / `#5D5D5D` / `#8F8F8F`; SF Pro at 400 and 600,
   with a 12–36px ramp where every size has its own line height and letter spacing.
 - **Two token layers.** Palette primitives → semantic intents (`color.text.muted`, `color.bg.brand`). Dark mode lives

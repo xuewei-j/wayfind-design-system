@@ -121,7 +121,7 @@ describe('check_styles', () => {
     expect(applied).toBe(6);
     expect(code).toContain('gap={6}');
     expect(code).toContain('variant="primary"');
-    expect(code).toContain("background: 'var(--wf-color-bg-accent)'");
+    expect(code).toContain("background: 'var(--wf-color-bg-brand)'");
     expect(code).toContain("padding: 'var(--wf-space-2)'");
     expect(code).toContain("fontFamily: 'var(--wf-font-family-body)'");
     expect(code).toMatch(/var\(--wf-color-text-[a-z-]+\)/);

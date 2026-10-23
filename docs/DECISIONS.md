@@ -44,7 +44,8 @@ component stylesheet, and `check_styles` gives agents the same rule.
 both fail AA for button text (4.5:1). The product design system's Brand / Primary `#BA4300` measures **5.40:1**.
 
 **Decision.** Build the orange scale around `#BA4300` (`palette.orange.600`) and make it `color.bg.brand`; hover goes
-darker (`orange-700`, 7.19:1), never lighter. `#E07B42` stays as `color.bg.accent` with near-black text (6.55:1). Text
+darker (`orange-700`, 7.19:1), never lighter. The accent tag uses a soft `orange-100` fill with
+`orange-800` text (7.60:1); `#E07B42` only appears as the dark-mode accent, with dark text. Text
 colors are the design system's grays: `#0D0D0D` primary, `#5D5D5D` secondary (5.93:1 even on the `#F3F3F3` fill), and
 `#8F8F8F` (3.23:1) for disabled text only. Every pairing the components use is listed in a contract and checked in both
 modes at build time.
