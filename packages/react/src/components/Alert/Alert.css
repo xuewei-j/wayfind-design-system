@@ -8,7 +8,6 @@
   gap: var(--wf-space-3);
   padding: var(--wf-space-4);
   border: var(--wf-border-width-thin) solid var(--_border);
-  border-left-width: var(--wf-border-width-accent);
   border-radius: var(--wf-radius-lg);
   background: var(--_bg);
   color: var(--wf-color-text-default);
