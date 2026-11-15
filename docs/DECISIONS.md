@@ -107,7 +107,8 @@ by people in devtools and by agents in generated code. Variant-specific values a
 are often incomplete code.
 
 **Decision.** Pattern-based checks with careful position tracking, comment masking, and a small JSX tag scanner that
-skips over `{expressions}`. Lines containing `wayfind-ignore` are skipped, like `eslint-disable`.
+skips over `{expressions}`. Lines containing `wayfind-ignore` are skipped, like `eslint-disable` (since decision 13, the
+ignore has to give a reason).
 
 **Trade-off.** It can be fooled: a spread of props hides missing ones (so missing-prop checks are skipped when `{...props}`
 is present), and computed values aren't evaluated. An AST-based version (e.g. an ESLint plugin and a Stylelint plugin
@@ -131,6 +132,33 @@ Cursor) or, with `--http`, to a stateless Streamable HTTP endpoint that builds a
 **Why.** All tools are pure and read-only, so there's no session state to keep. Stateless HTTP is the easiest shape to
 deploy behind a serverless function for remote clients such as ChatGPT apps or custom connectors.
 
+## 12. Decision patterns are data, next to the components
+
+**Context.** A complete component library still can't answer one question: which one, here? The answers lived in each
+component's do/don't list, one component at a time, or in nobody's notes. Agents had it worse. They could look up
+`Alert` and `TextField`, but nothing told them which of the two a form error belongs in.
+
+**Decision.** A third registry, `decisions/*.ts`. Each pattern is a question, a principle, two or more options with the
+condition that selects each one, what to avoid, and where the pattern ends. Storybook renders them, the MCP server
+serves them through `list_decisions` and `get_decision`, and `docs/DECISION-PATTERNS.md` is generated from them.
+
+**Trade-off.** Patterns are prose, so tests can only check their edges: the components they name exist, their examples
+pass the linter, their links resolve. Whether the guidance is right still takes people. So the set is small (seven) and
+limited to choices the existing components actually force.
+
+## 13. Exceptions are records, and they can expire
+
+**Context.** The linter already allowed `wayfind-ignore`. That made exceptions possible and invisible: nothing said
+why a rule was broken, and nothing noticed when the reason went away.
+
+**Decision.** An exception log, `exceptions.ts`: the rule, where it is broken, why, whether it is a one-off or standing,
+what came of it (kept, declined, promoted) and a "next time" line. Library CSS cites the id
+(`wayfind-ignore EX-004`). The linter rejects a bare ignore or an unknown id, and reports every exception it skipped.
+An exception that rests on a contrast number carries it as `evidence`, and a test re-measures it in both modes.
+
+**Trade-off.** In someone else's codebase the linter can only check that an ignore has a reason, not that the reason is
+good: their exception log isn't this one. The id check only covers exceptions recorded in Wayfind itself.
+
 ---
 
 ## What I'd do next
@@ -140,3 +168,5 @@ deploy behind a serverless function for remote clients such as ChatGPT apps or c
 - Visual regression tests for every story (Chromatic or Playwright screenshots).
 - More components where agents struggle most: Select, Dialog, Tabs.
 - Measure it: run the same UI prompts through an agent with and without the MCP server and count `check_styles` issues.
+- Lint for decisions, not only for tokens: flag two primary buttons in one group, or an Alert used for a single
+  field's error.

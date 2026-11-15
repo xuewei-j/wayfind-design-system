@@ -17,6 +17,7 @@
     "mcp": "node packages/mcp/dist/bin.js",
     "ci": "pnpm build && pnpm typecheck && pnpm test && pnpm build-storybook && pnpm audit:a11y",
     "audit:a11y": "pnpm --filter @wayfind/docs audit:a11y",
+    "docs:generate": "pnpm --filter @wayfind/mcp exec vitest run test/docs.test.ts -u",
     "release:pack": "node scripts/pack-release.mjs"
   },
   "author": "Xuewei Jiang (https://www.xueweijiang.com)",
