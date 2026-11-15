@@ -10,3 +10,4 @@ export { Heading, type HeadingProps, type HeadingOwnProps } from './components/H
 export { Text, type TextProps, type TextOwnProps } from './components/Text/Text';
 
 export type { ComponentMeta, PropDoc, Example } from './meta';
+export type { DecisionPattern, DecisionOption, DecisionException } from './decision';
