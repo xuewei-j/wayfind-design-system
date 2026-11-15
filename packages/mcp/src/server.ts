@@ -5,6 +5,12 @@ import {
   listComponents,
   getComponent,
   componentToMarkdown,
+  listDecisions,
+  getDecision,
+  decisionToMarkdown,
+  exceptionsToMarkdown,
+  tokenArchitecture,
+  architectureToMarkdown,
   searchTokens,
   tokenGroups,
   checkStyles,
@@ -17,9 +23,10 @@ export const SERVER_NAME = 'wayfind';
 export const SERVER_VERSION = '0.1.0';
 
 const INSTRUCTIONS = `Wayfind is a React design system. Use these tools whenever you write UI for a Wayfind project:
-1. list_components → get_component for each component you plan to use.
-2. search_tokens for any color, spacing, radius or type value; only use semantic color tokens.
-3. check_styles on your final code; fix every error and warning before answering.
+1. list_decisions when you have to choose (which variant, where an error goes, how loud a message is) → get_decision, and follow it.
+2. list_components → get_component for each component you plan to use.
+3. search_tokens for any color, spacing, radius or type value; only use semantic color tokens.
+4. check_styles on your final code; fix every error and warning before answering.
 Read the wayfind://guidelines resource for house rules.`;
 
 const json = (value: unknown) => ({ content: [{ type: 'text' as const, text: JSON.stringify(value, null, 2) }] });
@@ -67,6 +74,46 @@ export function createServer(): McpServer {
   );
 
   server.registerTool(
+    'list_decisions',
+    {
+      title: 'List decision patterns',
+      description:
+        'Lists the questions Wayfind has already answered about when to use what: where a form error goes, which button variant, whether a message should interrupt, what an empty screen shows. Pass a query (a question or a component name) to get the closest matches first. Check here before choosing between components.',
+      inputSchema: {
+        query: z.string().optional().describe('A question in your own words, or a component name, e.g. "error on field or banner" or "Button".'),
+      },
+      annotations: readOnly,
+    },
+    async ({ query }) => json(listDecisions(query)),
+  );
+
+  server.registerTool(
+    'get_decision',
+    {
+      title: 'Get a decision pattern',
+      description:
+        'One decision pattern in full: the question, the principle behind it, each option with the condition that selects it and a code example, what to avoid, where the pattern ends, and the exceptions recorded against it.',
+      inputSchema: { id: z.string().describe('Pattern id from list_decisions, e.g. "form-errors".') },
+      annotations: readOnly,
+    },
+    async ({ id }) => {
+      const result = getDecision(id);
+      if (result.found) return text(decisionToMarkdown(result.decision, result.exceptions));
+      return {
+        isError: true,
+        content: [
+          {
+            type: 'text' as const,
+            text: `No decision pattern "${id}".${
+              result.suggestions.length ? ` Closest: ${result.suggestions.join(', ')}.` : ''
+            } Call list_decisions to see all of them.`,
+          },
+        ],
+      };
+    },
+  );
+
+  server.registerTool(
     'search_tokens',
     {
       title: 'Search design tokens',
@@ -83,7 +130,10 @@ export function createServer(): McpServer {
       annotations: readOnly,
     },
     async ({ query, type, tier, limit }) => {
-      if (!query && !type && !tier) return json({ total: tokens.length, groups: tokenGroups() });
+      if (!query && !type && !tier) {
+        const tiers = Object.fromEntries(tokenArchitecture().tiers.map((t) => [t.tier, t.count]));
+        return json({ total: tokens.length, tiers, groups: tokenGroups() });
+      }
       return json(searchTokens({ query, type, tier, limit }));
     },
   );
@@ -93,7 +143,7 @@ export function createServer(): McpServer {
     {
       title: 'Lint UI code against Wayfind',
       description:
-        'Checks a CSS or JSX/TSX snippet for design-system problems: unknown or primitive tokens, hard-coded colors, off-grid spacing/radius/font sizes, off-system fonts, invalid component props (e.g. variant="tertiary") and missing required props (e.g. a TextField without label). Returns issues with line numbers and suggested replacements. With fix: true it also returns the code with every safe fix applied, plus the issues that still need your judgment. Run it on your output before you finish.',
+        'Checks a CSS or JSX/TSX snippet for design-system problems: unknown or primitive tokens, hard-coded colors, off-grid spacing/radius/font sizes, off-system fonts, invalid component props (e.g. variant="tertiary") and missing required props (e.g. a TextField without label). Returns issues with line numbers and suggested replacements, plus the exceptions it skipped (lines marked wayfind-ignore with a reason). With fix: true it also returns the code with every safe fix applied, plus the issues that still need your judgment. Run it on your output before you finish.',
       inputSchema: {
         code: z.string().min(1).describe('CSS, JSX or TSX source.'),
         fix: z.boolean().optional().describe('Apply machine-safe fixes and return the fixed code.'),
@@ -149,6 +199,50 @@ export function createServer(): McpServer {
   );
 
   server.registerResource(
+    'token-architecture',
+    'wayfind://tokens/architecture',
+    {
+      title: 'Token architecture',
+      description: 'The token tiers, naming rules, and where every semantic color points in light and dark.',
+      mimeType: 'text/markdown',
+    },
+    async (uri) => ({ contents: [{ uri: uri.href, mimeType: 'text/markdown', text: architectureToMarkdown() }] }),
+  );
+
+  server.registerResource(
+    'exceptions',
+    'wayfind://exceptions',
+    {
+      title: 'Exception log',
+      description: 'Every place Wayfind breaks one of its own rules, why, and what to do next time.',
+      mimeType: 'text/markdown',
+    },
+    async (uri) => ({ contents: [{ uri: uri.href, mimeType: 'text/markdown', text: exceptionsToMarkdown() }] }),
+  );
+
+  server.registerResource(
+    'decision-docs',
+    new ResourceTemplate('wayfind://decisions/{id}', {
+      list: async () => ({
+        resources: listDecisions().map((d) => ({
+          uri: `wayfind://decisions/${d.id}`,
+          name: d.id,
+          description: d.question,
+          mimeType: 'text/markdown',
+        })),
+      }),
+    }),
+    { title: 'Decision patterns', description: 'Markdown docs for one decision pattern.', mimeType: 'text/markdown' },
+    async (uri, { id }) => {
+      const result = getDecision(String(id));
+      if (!result.found) throw new Error(`Unknown decision pattern "${id}"`);
+      return {
+        contents: [{ uri: uri.href, mimeType: 'text/markdown', text: decisionToMarkdown(result.decision, result.exceptions) }],
+      };
+    },
+  );
+
+  server.registerResource(
     'component-docs',
     new ResourceTemplate('wayfind://components/{name}', {
       list: async () => ({
@@ -185,10 +279,11 @@ export function createServer(): McpServer {
 
 Work like this:
 1. Read wayfind://guidelines.
-2. Call list_components, then get_component for every component you use.
-3. Use semantic tokens via search_tokens for anything a component doesn't cover.
-4. Write the code (React + TypeScript).
-5. Run check_styles on it and fix every error and warning. Show the final code only.`,
+2. Call list_decisions. For every choice you have to make, call get_decision and follow the option that fits.
+3. Call list_components, then get_component for every component you use.
+4. Use semantic tokens via search_tokens for anything a component doesn't cover.
+5. Write the code (React + TypeScript).
+6. Run check_styles on it and fix every error and warning. Show the final code only.`,
           },
         },
       ],

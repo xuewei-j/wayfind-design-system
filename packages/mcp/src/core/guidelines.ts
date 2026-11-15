@@ -12,6 +12,12 @@ import { Button, Stack, TextField } from '@wayfind/react';
 \`\`\`
 No web fonts to load: the font tokens use the system stack, which is SF Pro on Apple platforms.
 
+## Decide before you build
+Components tell you how to build something. Decision patterns tell you which thing to build.
+When you are choosing — where an error goes, which button variant, whether a message should interrupt, what an
+empty screen shows, how much contrast a pair needs — call \`list_decisions\`, then \`get_decision\`, and follow the
+option whose "when" matches your case.
+
 ## Rules
 1. **Reach for a component first.** Call \`list_components\`, then \`get_component\` for each one you use. Don't restyle raw HTML when a component exists.
 2. **Only semantic color tokens in product code.** \`var(--wf-color-text-default)\`, \`var(--wf-color-bg-brand)\`… Never \`--wf-palette-*\` and never hex values: semantic tokens carry dark mode and accessibility guarantees.
@@ -22,6 +28,12 @@ No web fonts to load: the font tokens use the system stack, which is SF Pro on A
 7. **Color is never the only signal.** Tags and Alerts always carry text.
 8. **Only #BA4300 carries white text.** The lighter oranges #D95F27 (3.74:1) and #E07B42 (2.97:1) fail AA with white. Use \`color.bg.brand\` for CTAs and \`color.bg.accent\` + \`color.text.on-accent\` for decorative highlights.
 9. **Set type with matching tokens.** Pair \`font.size.<step>\` with \`font.line-height.<step>\` and \`font.letter-spacing.<step>\`; weights are 400 and 600.
+
+## Exceptions
+If a rule really does not fit, break it in the open.
+- Put \`wayfind-ignore: <why>\` on the line, or cite a recorded exception: \`wayfind-ignore EX-004\`.
+- \`check_styles\` lists every exception it skipped and flags an ignore that gives no reason.
+- The recorded ones are at \`wayfind://exceptions\`. Read the "next time" line before adding a similar one.
 
 ## Voice
 Short, concrete, verb-first. "Book tickets", not "Submit". Errors say how to fix the problem.

@@ -15,7 +15,7 @@ describe('check_styles', () => {
   border-radius: var(--wf-radius-md);
   font-family: var(--wf-font-family-body);
 }`);
-    expect(report).toEqual({ passed: true, summary: { errors: 0, warnings: 0, infos: 0 }, issues: [] });
+    expect(report).toEqual({ passed: true, summary: { errors: 0, warnings: 0, infos: 0 }, issues: [], exceptions: [] });
   });
 
   it('catches hallucinated tokens and maps names borrowed from other systems by intent', () => {

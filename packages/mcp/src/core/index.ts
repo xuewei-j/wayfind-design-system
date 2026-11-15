@@ -5,6 +5,8 @@
  */
 export * from './tokens';
 export * from './components';
+export * from './decisions';
+export * from './architecture';
 export * from './lint';
 export * from './contrast';
 export { guidelines } from './guidelines';

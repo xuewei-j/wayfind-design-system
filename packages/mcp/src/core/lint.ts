@@ -6,14 +6,18 @@
  * made-up variants ("tertiary"), and fields without labels.
  *
  * It is deliberately regex-based (no parser dependency) so it runs in the
- * browser and inside an MCP call in a few milliseconds. Lines containing
- * `wayfind-ignore` are skipped, like an eslint-disable comment.
+ * browser and inside an MCP call in a few milliseconds.
+ *
+ * Lines containing `wayfind-ignore` are skipped, like an eslint-disable
+ * comment, but an exception has to explain itself: `wayfind-ignore: <why>`,
+ * or a recorded exception id (`wayfind-ignore EX-004`). The report lists every
+ * exception it skipped, so breaking a rule is visible instead of silent.
  *
  * Most issues carry a machine-applicable `fix`, so an agent can lint → fix →
  * re-lint in a loop and only has to think about what's left.
  */
 import { tokens, parseColor, colorDistance, chroma, type ResolvedToken } from '@wayfind/tokens';
-import { components, type ComponentMeta } from '@wayfind/react/registry';
+import { components, exceptions, type ComponentMeta } from '@wayfind/react/registry';
 
 export type Severity = 'error' | 'warning' | 'info';
 
@@ -25,7 +29,9 @@ export type Rule =
   | 'raw-scale-value'
   | 'unknown-font'
   | 'invalid-prop'
-  | 'missing-prop';
+  | 'missing-prop'
+  | 'unexplained-ignore'
+  | 'unknown-exception';
 
 /** Replace code.slice(start, end) with text. Offsets refer to the original input. */
 export interface Fix {
@@ -46,13 +52,25 @@ export interface StyleIssue {
   fix?: Fix;
 }
 
+/** A line the linter skipped because it carries an explained `wayfind-ignore`. */
+export interface AcknowledgedException {
+  line: number;
+  /** Id in the exception log, when the comment cites one. */
+  id?: string;
+  reason: string;
+}
+
 export interface StyleReport {
   passed: boolean;
   summary: { errors: number; warnings: number; infos: number };
   issues: StyleIssue[];
+  /** Rules broken on purpose, with the reason given. Empty when the code has no exceptions. */
+  exceptions: AcknowledgedException[];
 }
 
 const ROOT_PX = 16;
+const IGNORE = /wayfind-ignore\b[:\s]*([^\n]*)/;
+const recordedExceptions = new Map(exceptions.map((e) => [e.id, e]));
 const byCssVar = new Map(tokens.map((t) => [t.cssVar, t]));
 const byName = new Map(tokens.map((t) => [t.name, t]));
 const semanticColors = tokens.filter((t) => t.tier === 'semantic' && t.type === 'color');
@@ -178,7 +196,44 @@ export function checkStyles(code: string): StyleReport {
     while (lineStarts[line]! > index) line--;
     return { line: line + 1, column: index - lineStarts[line]! + 1 };
   };
-  const ignored = new Set(code.split('\n').flatMap((text, i) => (text.includes('wayfind-ignore') ? [i + 1] : [])));
+  // 0. Exceptions. An ignored line is skipped by every other rule, so the ignore itself has to hold up.
+  const ignored = new Set<number>();
+  const acknowledged: AcknowledgedException[] = [];
+  code.split('\n').forEach((text, i) => {
+    const match = IGNORE.exec(text);
+    if (!match) return;
+    const line = i + 1;
+    const column = match.index + 1;
+    ignored.add(line);
+    const note = match[1]!.replace(/\*\/.*$/, '').replace(/[\s}]+$/, '').trim();
+    const id = /\bEX-\d{3}\b/.exec(note)?.[0];
+    if (id) {
+      const recorded = recordedExceptions.get(id);
+      if (recorded) acknowledged.push({ line, id, reason: recorded.why });
+      else {
+        issues.push({
+          rule: 'unknown-exception',
+          severity: 'error',
+          line,
+          column,
+          found: id,
+          message: `${id} is not in the exception log. Record it first, or give the reason inline: wayfind-ignore: <why>.`,
+        });
+      }
+    } else if (note.replace(/[^a-zA-Z]/g, '').length >= 3) {
+      acknowledged.push({ line, reason: note });
+    } else {
+      issues.push({
+        rule: 'unexplained-ignore',
+        severity: 'warning',
+        line,
+        column,
+        found: 'wayfind-ignore',
+        message:
+          'An exception needs a reason. Write `wayfind-ignore: <why>` or cite a recorded exception (`wayfind-ignore EX-001`).',
+      });
+    }
+  });
   const add = (index: number, issue: Omit<StyleIssue, 'line' | 'column'>) => {
     const pos = position(index);
     if (!ignored.has(pos.line)) issues.push({ ...pos, ...issue });
@@ -369,7 +424,7 @@ export function checkStyles(code: string): StyleReport {
   issues.sort((a, b) => a.line - b.line || a.column - b.column);
   const count = (s: Severity) => issues.filter((i) => i.severity === s).length;
   const summary = { errors: count('error'), warnings: count('warning'), infos: count('info') };
-  return { passed: summary.errors === 0 && summary.warnings === 0, summary, issues };
+  return { passed: summary.errors === 0 && summary.warnings === 0, summary, issues, exceptions: acknowledged };
 }
 
 export interface FixResult {

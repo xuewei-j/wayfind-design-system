@@ -30,7 +30,9 @@ describe('MCP server (in-memory)', () => {
       'check_contrast',
       'check_styles',
       'get_component',
+      'get_decision',
       'list_components',
+      'list_decisions',
       'search_tokens',
     ]);
     expect(tools.every((t) => t.annotations?.readOnlyHint)).toBe(true);
@@ -44,6 +46,24 @@ describe('MCP server (in-memory)', () => {
     expect(doc).toContain('# Button');
     expect(doc).toContain("import { Button } from '@wayfind/react';");
     expect(doc).toContain('`variant`');
+  });
+
+  it('list_decisions → get_decision', async () => {
+    const all = JSON.parse(textOf(await client.callTool({ name: 'list_decisions', arguments: {} })));
+    expect(all.map((d: { id: string }) => d.id)).toContain('form-errors');
+
+    const matched = JSON.parse(
+      textOf(await client.callTool({ name: 'list_decisions', arguments: { query: 'should this message interrupt' } })),
+    );
+    expect(matched[0].id).toBe('feedback-loudness');
+
+    const doc = textOf(await client.callTool({ name: 'get_decision', arguments: { id: 'form-errors' } }));
+    expect(doc).toContain('# Does this error go on the field or in a banner?');
+    expect(doc).toContain('<TextField label="Email address"');
+
+    const miss = await client.callTool({ name: 'get_decision', arguments: { id: 'error banner' } });
+    expect(miss.isError).toBe(true);
+    expect(textOf(miss)).toContain('Closest: form-errors');
   });
 
   it('get_component suggests names on a miss', async () => {
@@ -61,6 +81,7 @@ describe('MCP server (in-memory)', () => {
 
     const toc = JSON.parse(textOf(await client.callTool({ name: 'search_tokens', arguments: {} })));
     expect(toc.total).toBeGreaterThan(100);
+    expect(toc.tiers.primitive + toc.tiers.semantic + toc.tiers.scale).toBe(toc.total);
   });
 
   it('check_styles returns structured issues', async () => {
@@ -105,6 +126,16 @@ describe('MCP server (in-memory)', () => {
     expect((css.contents[0] as { text: string }).text).toContain('--wf-color-bg-brand');
     const card = await client.readResource({ uri: 'wayfind://components/Card' });
     expect((card.contents[0] as { text: string }).text).toContain('# Card');
+
+    expect(resources.map((r) => r.uri)).toEqual(
+      expect.arrayContaining(['wayfind://exceptions', 'wayfind://tokens/architecture', 'wayfind://decisions/form-errors']),
+    );
+    const log = await client.readResource({ uri: 'wayfind://exceptions' });
+    expect((log.contents[0] as { text: string }).text).toContain('### EX-001');
+    const architecture = await client.readResource({ uri: 'wayfind://tokens/architecture' });
+    expect((architecture.contents[0] as { text: string }).text).toContain('## Why two tiers');
+    const decision = await client.readResource({ uri: 'wayfind://decisions/empty-states' });
+    expect((decision.contents[0] as { text: string }).text).toContain('## Choose');
   });
 
   it('offers a build-ui prompt', async () => {
