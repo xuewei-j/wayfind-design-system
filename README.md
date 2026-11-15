@@ -182,13 +182,6 @@ apps/
 ## Credits
 
 A project by **Xuewei Jiang** — product designer, [xueweijiang.com](https://www.xueweijiang.com). Brand color, text colors and
-type follow the product design system (Brand / Primary `#BA4300`, SF Pro via the system font stack).
-
-The three-layer framing behind the decision patterns (components answer *how*, tokens answer *what it looks like*,
-decisions answer *when*) follows a post by ATOM63, “Design System 不是组件库，是判断系统”. Turning it into data, tests
-and agent tools is this project's take on it.
-
-Built in pair-programming sessions with Claude (Anthropic): I set the concept, brand, scope and design direction, and we
-built the implementation together. Commits are co-authored accordingly.
+type follow the product design system.
 
 MIT licensed.
