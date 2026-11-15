@@ -1,6 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState } from 'react';
-import { componentToMarkdown, getComponent, listComponents, searchTokens } from '@wayfind/mcp/core';
+import {
+  componentToMarkdown,
+  decisionToMarkdown,
+  getComponent,
+  getDecision,
+  listComponents,
+  listDecisions,
+  searchTokens,
+} from '@wayfind/mcp/core';
 import { Button, Heading, Stack, Text, TextField } from '@wayfind/react';
 
 const pre = {
@@ -53,6 +61,39 @@ function AgentView() {
   );
 }
 
+function DecisionSearch() {
+  const [query, setQuery] = useState('where does a form error go');
+  const matches = listDecisions(query);
+  const top = matches[0] ? getDecision(matches[0].id) : undefined;
+  return (
+    <Stack gap={5}>
+      <Stack gap={2}>
+        <Heading level={1} size="xl">
+          list_decisions → get_decision
+        </Heading>
+        <Text tone="muted">
+          Before choosing between components, an agent asks what the team already decided. It can ask in its own words;
+          the closest pattern comes back first, with its options, what to avoid and any recorded exceptions.
+        </Text>
+      </Stack>
+      <div style={{ maxWidth: '24rem' }}>
+        <TextField
+          label="Question"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          hint='Try "which button variant", "empty screen", or "Tag".'
+        />
+      </div>
+      <Text size="sm" tone="muted">
+        {matches.length ? `Matches: ${matches.map((m) => m.id).join(', ')}` : 'No pattern matches. An agent would fall back to the component docs.'}
+      </Text>
+      <pre style={pre} tabIndex={0} role="region" aria-label="get_decision response">
+        {top?.found ? decisionToMarkdown(top.decision, top.exceptions) : ''}
+      </pre>
+    </Stack>
+  );
+}
+
 function TokenSearch() {
   const [query, setQuery] = useState('muted text');
   const results = searchTokens({ query, limit: 8 });
@@ -88,4 +129,5 @@ const meta = {
 export default meta;
 
 export const ComponentDocs: StoryObj = { name: 'get_component', render: () => <AgentView /> };
+export const Decisions: StoryObj = { name: 'get_decision', render: () => <DecisionSearch /> };
 export const Tokens: StoryObj = { name: 'search_tokens', render: () => <TokenSearch /> };

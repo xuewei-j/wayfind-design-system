@@ -16,9 +16,10 @@ in giving a design system a second audience. Everything a designer documents for
 - **`@wayfind/tokens`** — design tokens in the W3C DTCG format. One JSON file becomes CSS variables, a typed JS API, and an
   accessibility contract that fails the build if a color pair drops below WCAG AA.
 - **`@wayfind/react`** — eight accessible React components, plus a **registry**: machine-readable docs for each one (props,
-  do/don't, accessibility notes, examples).
-- **`@wayfind/mcp`** — an MCP server that hands agents the registry and tokens, with a `check_styles` linter that catches
-  and fixes off-system code.
+  do/don't, accessibility notes, examples), the **decision patterns** that say when to use which, and the **exception
+  log** of every rule the system breaks on purpose.
+- **`@wayfind/mcp`** — an MCP server that hands agents the registry, the decisions and the tokens, with a `check_styles`
+  linter that catches and fixes off-system code.
 - **`@wayfind/docs`** — this Storybook. Component docs pages are generated from the same registry entries the agents read.
 
 ## One source, two audiences
@@ -26,7 +27,8 @@ in giving a design system a second audience. Everything a designer documents for
 ```
 tokens.json ──┬──► tokens.css ───────────────► components ──► Storybook (people)
               └──► token API ──┐
-component registry ────────────┴──► MCP server ──► Claude / Cursor / ChatGPT (agents)
+component registry ────────────┤
+decision patterns, exceptions ─┴──► MCP server ──► Claude / Cursor / ChatGPT (agents)
 ```
 
 Tests keep the two in sync: every prop must be documented, every color token a component's CSS uses must appear in its
@@ -34,6 +36,8 @@ registry entry, and the component library must pass its own linter.
 
 ## Where to start
 
+- **Decision patterns → Overview** — the third layer: when to use which component, and the log of exceptions.
+- **Foundations → Token architecture** — two tiers for color, why not three, and one token followed end to end.
 - **Foundations → Colors → Contrast contract** — why only Brand / Primary `#BA4300` (5.40:1) carries white text, and the lighter oranges don't.
 - **Patterns → Exhibition booking** — a full page built only from the system. Toggle dark mode in the toolbar.
 - **Agents → Style checker** — paste AI-generated code and watch it get linted and fixed.

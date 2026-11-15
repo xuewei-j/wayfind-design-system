@@ -1,0 +1,63 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Decision patterns/Overview" />
+
+# Decision patterns
+
+**The third layer of a design system: when to use which, and when it is fine not to.**
+
+A component library answers *how do I build this?* Tokens answer *what does it look like?* Neither answers
+*which one do I use here?* That judgment usually lives in people's heads, so it gets argued again in every
+review: does this error go on the field or in a banner, should this message interrupt, can I use the brand color here.
+
+A team can have every component it needs and still ship an inconsistent product, because the components were never
+the missing part. The decisions were.
+
+Wayfind writes those decisions down as data, next to the component docs.
+
+| Layer | Answers | Lives in |
+| --- | --- | --- |
+| Tokens | What does it look like? | `tokens.json` |
+| Components | How is it built? | the component registry |
+| **Decision patterns** | When do I use which? | `packages/react/src/decisions` |
+| **Exception log** | When is it fine not to, and why? | `packages/react/src/exceptions.ts` |
+
+## How a pattern is written
+
+Each pattern is one question a team keeps asking. It has:
+
+- **A principle**: the value the answer follows from, in one sentence.
+- **Options**: at least two, each with the condition that selects it, the components that implement it and a code
+  example. A test runs every example through the linter.
+- **Avoid**: what the pattern rules out, each with its reason.
+- **Where it ends**: the edge of the pattern, and what to do with a case that falls outside it.
+
+## Exceptions are part of the system
+
+Real products break their own rules. The question is whether anyone can tell where and why. An exception here has to
+answer three things:
+
+1. Why doesn't the rule fit this case?
+2. Is it a one-off, or a sign the system should change?
+3. What should the next person do when a similar case shows up?
+
+Each exception gets an id. The code that breaks the rule cites it (`wayfind-ignore EX-004`), and the linter rejects an
+ignore that gives no reason or cites an id that doesn't exist. Exceptions that depend on a contrast measurement carry
+that measurement, and a test re-measures it. When the tokens change and the exception is no longer true, the build
+fails and the entry is retired.
+
+## One source, two audiences
+
+These pages are rendered from the registry. The MCP server serves the same entries to AI agents:
+
+- `list_decisions` takes a question in plain words ("where does a form error go") and returns the closest patterns.
+- `get_decision` returns one pattern in full, with its recorded exceptions.
+- `check_styles` lists every exception it skipped, so an agent that breaks a rule has to say why.
+
+An agent that only knows the components can put a perfectly valid Alert above a form for one mistyped email. An agent
+that can ask what the team decided puts the error on the field.
+
+<small>
+  The three-layer framing follows a post by ATOM63, "Design System 不是组件库，是判断系统". Turning it into data,
+  tests and agent tools is this project's take on it.
+</small>

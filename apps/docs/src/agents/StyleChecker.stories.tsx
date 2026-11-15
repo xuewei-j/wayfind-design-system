@@ -118,7 +118,17 @@ function StyleChecker() {
             <Tag tone={report.summary.errors ? 'danger' : 'success'}>{report.summary.errors} errors</Tag>
             <Tag tone={report.summary.warnings ? 'warning' : 'success'}>{report.summary.warnings} warnings</Tag>
             <Tag>{report.summary.infos} info</Tag>
+            {report.exceptions.length > 0 && (
+              <Tag tone="brand">
+                {report.exceptions.length} exception{report.exceptions.length === 1 ? '' : 's'} explained
+              </Tag>
+            )}
           </Stack>
+          {report.exceptions.map((exception) => (
+            <Text key={exception.line} size="sm" tone="muted">
+              Line {exception.line} breaks a rule on purpose{exception.id ? ` (${exception.id})` : ''}: {exception.reason}
+            </Text>
+          ))}
           {lastFix !== undefined && (
             <Alert tone={report.passed ? 'success' : 'info'} title={`Applied ${lastFix} fixes`}>
               {report.passed

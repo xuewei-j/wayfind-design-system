@@ -34,7 +34,16 @@ const preview: Preview = {
     a11y: { test: 'error' },
     options: {
       storySort: {
-        order: ['Introduction', 'Foundations', ['Colors', 'Typography', 'Spacing & shape'], 'Components', 'Patterns', 'Agents'],
+        order: [
+          'Introduction',
+          'Foundations',
+          ['Token architecture', 'Colors', 'Typography', 'Spacing & shape'],
+          'Components',
+          'Decision patterns',
+          ['Overview', 'Patterns', 'Exception log'],
+          'Patterns',
+          'Agents',
+        ],
       },
     },
   },
